@@ -135,7 +135,7 @@ cmake -G "Visual Studio 14 Win64" .. -DUSE_CUDA=0 -DUSE_CUDNN=0 -DUSE_NVRTC=0 -D
 4. Enable Intel MKL-DNN and Intel MKL as BLAS library by the command:  
 ```
 "C:\Program Files (x86)\IntelSWTools\compilers_and_libraries\windows\mkl\bin\mklvars.bat" intel64
-cmake -G "Visual Studio 14 Win64" .. -DUSE_CUDA=0 -DUSE_CUDNN=0 -DUSE_NVRTC=0 -DUSE_OPENCV=1 -DUSE_OPENMP=1 -DUSE_PROFILER=1 -DUSE_BLAS=mkl -DUSE_LAPACK=1 -DUSE_DIST_KVSTORE=0 -DCUDA_ARCH_NAME=All -DUSE_MKLDNN=1 -DCMAKE_BUILD_TYPE=Release -DMKL_ROOT="C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2019\windows\mkl" -DUSE_MKL_IF_AVAILABLE=1
+cmake -G "Visual Studio 14 Win64" .. -DUSE_CUDA=0 -DUSE_CUDNN=0 -DUSE_NVRTC=0 -DUSE_OPENCV=1 -DUSE_OPENMP=1 -DUSE_PROFILER=1 -DUSE_BLAS=mkl -DUSE_LAPACK=1 -DUSE_DIST_KVSTORE=0 -DCUDA_ARCH_NAME=All -DUSE_MKLDNN=1 -DCMAKE_BUILD_TYPE=Release -DMKL_ROOT="C:\Program Files (x86)\IntelSWTools\compilers_and_libraries\windows\mkl" -DUSE_MKL_IF_AVAILABLE=1
 ```
 5. After the CMake successfully completed, compile the the MXNet source code by using following command:
 ```
@@ -144,7 +144,8 @@ msbuild mxnet.sln /p:Configuration=Release;Platform=x64 /maxcpucount
   Or in Visual Studio, open the solution file,```.sln```, and compile it.
 
   These commands produce a library called ```libmxnet.dll``` in the ```./build/Release/``` or ```./build/Debug``` folder. Also ```libmkldnn.dll``` with be in the ```./build/3rdparty/mkldnn/src/Release/```
-6. Make sure that all the dll files used above(such as `libmkldnn.dll`, `libmklml.dll`, `libiomp5.dll`, `libopenblas.dll`, etc) are added to the system PATH. For convinence, you can put all of them to ```\windows\system32```. Or you will come across `Not Found Dependencies` when loading MXNet.
+  
+6. Make sure that all the dll files used above(such as `libmkldnn.dll`, `libmklml*.dll`, `libiomp5.dll`, `libopenblas*.dll`, etc) are added to the system PATH. For convinence, you can put all of them to ```\windows\system32```. Or you will come across `Not Found Dependencies` when loading MXNet.
 
 **Visual Studio 2017**
 
@@ -169,7 +170,9 @@ cd C:\
 git clone --recursive https://github.com/apache/incubator-mxnet.git
 ```
 3. Start a Visual Studio command prompt by click windows Start menu>>Visual Studio 2017>>VS2017 X64 Native Tools Command Prompt, go to the MXNet source directory, for example
-```cd C:\incubator-mxnet\```
+```cd C:\incubator-mxnet\
+```
+
   Step 4 and step 5 are optional, for who want to use vs2015 toolset in VS2017 environment. 
 
 4. (Optional) Follow [this link](https://docs.microsoft.com/en-us/visualstudio/install/modify-visual-studio) to modify ```Individual components```, and check ```VC++ 2017 version 15.4 v14.11 toolset```, and click ```Modify```.
@@ -186,7 +189,7 @@ cmake -G "Visual Studio 15 Win64" .. -DUSE_CUDA=0 -DUSE_CUDNN=0 -DUSE_NVRTC=0 -D
 7. Enable Intel MKL-DNN and Intel MKL as BLAS library by the command:  
 ```
 "C:\Program Files (x86)\IntelSWTools\compilers_and_libraries\windows\mkl\bin\mklvars.bat" intel64
-cmake -G "Visual Studio 15 Win64" .. -DUSE_CUDA=0 -DUSE_CUDNN=0 -DUSE_NVRTC=0 -DUSE_OPENCV=1 -DUSE_OPENMP=1 -DUSE_PROFILER=1 -DUSE_BLAS=mkl -DUSE_LAPACK=1 -DUSE_DIST_KVSTORE=0 -DCUDA_ARCH_NAME=All -DUSE_MKLDNN=1 -DCMAKE_BUILD_TYPE=Release -DMKL_ROOT="C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2019\windows\mkl" -DUSE_MKL_IF_AVAILABLE=1
+cmake -G "Visual Studio 15 Win64" .. -DUSE_CUDA=0 -DUSE_CUDNN=0 -DUSE_NVRTC=0 -DUSE_OPENCV=1 -DUSE_OPENMP=1 -DUSE_PROFILER=1 -DUSE_BLAS=mkl -DUSE_LAPACK=1 -DUSE_DIST_KVSTORE=0 -DCUDA_ARCH_NAME=All -DUSE_MKLDNN=1 -DCMAKE_BUILD_TYPE=Release -DMKL_ROOT="C:\Program Files (x86)\IntelSWTools\compilers_and_libraries\windows\mkl" -DUSE_MKL_IF_AVAILABLE=1
 ```
 
 8. After the CMake successfully completed, compile the the MXNet source code by using following command:
@@ -194,34 +197,29 @@ cmake -G "Visual Studio 15 Win64" .. -DUSE_CUDA=0 -DUSE_CUDNN=0 -DUSE_NVRTC=0 -D
 msbuild mxnet.sln /p:Configuration=Release;Platform=x64 /maxcpucount
 ```
 
-9. Make sure that all the dll files used above(such as `libmkldnn.dll`, `libmklml.dll`, `libiomp5.dll`, `libopenblas.dll`, etc) are added to the system PATH. For convinence, you can put all of them to ```\windows\system32```. Or you will come across `Not Found Dependencies` when loading MXNet.
+9. Make sure that all the dll files used above(such as `libmkldnn.dll`, `libmklml*.dll`, `libiomp5.dll`, `libopenblas*.dll`, etc) are added to the system PATH. For convinence, you can put all of them to ```\windows\system32```. Or you will come across `Not Found Dependencies` when loading MXNet.
 
 <h2 id="4">Verify MXNet with python</h2>
 
 Preinstall python and some dependent modules: 
-
 ```
 pip install numpy==1.15.2 graphviz==0.8.4 requests
 set PYTHONPATH=[workdir]\incubator-mxnet\python
 ```
 or install mxnet
-
 ```
 cd python
 sudo python setup.py install
 python -c "import mxnet as mx;print((mx.nd.ones((2, 3))*2).asnumpy());"
 ```
 Expected Output:
-
 ```
 [[ 2.  2.  2.]
  [ 2.  2.  2.]]
 ```
-
 ### Verify whether MKL-DNN works
 
 After MXNet is installed, you can verify if MKL-DNN backend works well with a single Convolution layer.
-
 ```
 import mxnet as mx
 import numpy as np
